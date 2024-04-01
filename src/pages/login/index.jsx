@@ -8,7 +8,7 @@ const Login = () => {
   };
   
   return (
-    <div>Login</div>
+    <div className='mt-10'>Login</div>
   )
 }
 

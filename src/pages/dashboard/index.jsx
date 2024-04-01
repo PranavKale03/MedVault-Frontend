@@ -4,7 +4,7 @@ import AppNavbar from "../../components/AppNavbar/AppNavbar";
 const Dashboard = () => {
   return (
     <div>
-      <AppNavbar />
+      {/* <AppNavbar /> */}
       <h1>Dashboard</h1>
     </div>
   );
