@@ -18,7 +18,6 @@ const SignUp = () => {
     e.preventDefault();
     let errors = {};
 
-    // Validation logic (e.g., checking if fields are not empty)
     if (!formData.name) {
       errors.name = "Name is required";
     }
@@ -30,7 +29,6 @@ const SignUp = () => {
     }
 
     if (Object.keys(errors).length === 0) {
-      // Form is valid, log the entered details
       console.log(formData);
     } else {
       setErrors(errors);
@@ -40,7 +38,7 @@ const SignUp = () => {
     <section className="">
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
         <a
-          href="#"
+          href="/"
           className="flex items-center mb-6 text-2xl font-semibold text-gray-900"
         >
           <img className="w-8 h-8 mr-2" src={Logo} alt="logo" />
@@ -70,7 +68,9 @@ const SignUp = () => {
                   placeholder="Enter your name"
                   required=""
                 />
-                {errors.name && <span style={{ color: 'red' }}>{errors.name}</span>}
+                {errors.name && (
+                  <span style={{ color: "red" }}>{errors.name}</span>
+                )}
               </div>
               <div>
                 <label
@@ -89,7 +89,9 @@ const SignUp = () => {
                   placeholder="Enter your email"
                   required=""
                 />
-                {errors.email && <span style={{ color: 'red' }}>{errors.email}</span>}
+                {errors.email && (
+                  <span style={{ color: "red" }}>{errors.email}</span>
+                )}
               </div>
               <div>
                 <label
@@ -108,7 +110,9 @@ const SignUp = () => {
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                   required=""
                 />
-                {errors.password && <span style={{ color: 'red' }}>{errors.password}</span>}
+                {errors.password && (
+                  <span style={{ color: "red" }}>{errors.password}</span>
+                )}
               </div>
               {/* <div className="flex items-start">
                   <div className="flex items-center h-5">
