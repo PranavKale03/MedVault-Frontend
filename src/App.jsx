@@ -7,20 +7,23 @@ import PatientList from "./pages/patient-list";
 import Appointments from "./pages/appointments";
 import Contact from "./pages/contact";
 import AppNavbar from "./components/AppNavbar/AppNavbar";
+import { UserProvider } from "./context/UserContext";
 
 function App() {
   return (
-    <main className="container">
+    <main>
       <Router>
-        <AppNavbar />
-        <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/" element={<Dashboard />} />
-          <Route path="/patient-list" element={<PatientList />} />
-          <Route path="/appointments" element={<Appointments />} />
-          <Route path="/contact" element={<Contact />} />
-        </Routes>
+        <UserProvider>
+          <AppNavbar />
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/patient-list" element={<PatientList />} />
+            <Route path="/appointments" element={<Appointments />} />
+            <Route path="/contact" element={<Contact />} />
+          </Routes>
+        </UserProvider>
       </Router>
     </main>
   );
