@@ -16,7 +16,7 @@ const AppNavbar = () => {
           >
             <img src={Logo} className="h-8" alt="Logo" />
             <span className="self-center text-2xl font-semibold whitespace-nowrap">
-              MedVault
+              <span className="text-blue-700">Med</span>Vault
             </span>
           </a>
           {user ? (

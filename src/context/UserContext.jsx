@@ -16,7 +16,7 @@ export const UserProvider = ({ children }) => {
           const camelCaseObject = SnakeToCamel(result);
           const userData = camelCaseObject;
           if (userData) {
-            setUser(userData[0]);
+            setUser(userData);
           } else {
             setUser(null);
           }
