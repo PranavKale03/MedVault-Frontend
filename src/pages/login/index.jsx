@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { login } from "./context";
 import { setLocalStorageValueForKey } from "../../utils/localStorage";
 
@@ -103,12 +104,13 @@ const Login = () => {
               </button>
               <p className="text-sm font-light text-gray-500">
                 Don't have an account?{" "}
-                <a
+                {/* <a
                   href="/signup"
                   className="font-medium text-primary-600 hover:underline"
                 >
                   Register
-                </a>
+                </a> */}
+                <Link to="/signup" className="font-medium text-primary-600 hover:underline">Register</Link>
               </p>
             </form>
           </div>

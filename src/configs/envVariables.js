@@ -3,13 +3,13 @@ let APP_HOST;
 
 switch (APP_ENV) {
     case 'local':
-        APP_HOST = import.meta.env.VITE_APP_HOST_LOCAL || 'http://localhost:3000/api/v1';
+        APP_HOST = import.meta.env.VITE_APP_HOST_LOCAL || 'http://localhost:3000';
         break;
     case 'prod':
-        APP_HOST = import.meta.env.VITE_APP_HOST_PROD || 'https://medvault-mt5q.onrender.com/api/v1';
+        APP_HOST = import.meta.env.VITE_APP_HOST_PROD || 'https://medvault-mt5q.onrender.com';
         break;
     default:
-        APP_HOST = import.meta.env.VITE_APP_HOST_DEFAULT || 'https://medvault-mt5q.onrender.com/api/v1';
+        APP_HOST = import.meta.env.VITE_APP_HOST_DEFAULT || 'https://medvault-mt5q.onrender.com';
         break;
 }
 
