@@ -1,8 +1,10 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { register } from "./context";
 import { setLocalStorageValueForKey } from "../../utils/localStorage";
 
 const SignUp = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -71,6 +73,7 @@ const SignUp = () => {
     const res = doctorRegister.user;
     if (res) {
       setLocalStorageValueForKey("userId", res._id);
+      navigate(`/${res._id}`);
     }
   };
 
