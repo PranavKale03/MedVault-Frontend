@@ -13,7 +13,7 @@ export const login = async (data) => {
         };
     
         const response = await axios.post(
-          `${APP_HOST}/user/login`,
+          `${APP_HOST}/api/v1/user/login`,
           JSON.stringify(body),
           { headers }
         );

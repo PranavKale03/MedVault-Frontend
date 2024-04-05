@@ -17,7 +17,7 @@ export const register = async (data) => {
         };
     
         const response = await axios.post(
-          `${APP_HOST}/user/register`,
+          `${APP_HOST}/api/v1/user/register`,
           JSON.stringify(body),
           { headers }
         );
