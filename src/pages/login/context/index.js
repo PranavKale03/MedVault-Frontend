@@ -6,7 +6,6 @@ export const login = async (data) => {
         email: data.email,
         password: data.password
     }
-    console.log(body);
     try {
         const headers = {
           "Content-Type": "application/json",

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import "../../App.css";
 import Logo from "../../assets/react.svg";
 import UserContext from "../../context/UserContext";
+import Profile from "../../assets/profile.svg";
 
 const AppNavbar = () => {
   const { user } = useContext(UserContext);
@@ -20,7 +21,17 @@ const AppNavbar = () => {
             </span>
           </a>
           {user ? (
-            <p>User</p>
+            <>
+              <div className="flex items-center justify-between mb-2 border rounded-full">
+                <Link to={`/${user.id}`}>
+                  <img
+                    className="w-10 h-10 rounded-full p-1"
+                    src={Profile}
+                    alt="Profile"
+                  />
+                </Link>
+              </div>
+            </>
           ) : (
             <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
               <button

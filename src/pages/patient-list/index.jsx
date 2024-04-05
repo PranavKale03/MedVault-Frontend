@@ -1,9 +1,16 @@
-import React from 'react'
+import React, { useEffect } from "react";
+import { getPatients } from "./context";
 
 const PatientList = () => {
-  return (
-    <div>PatientList</div>
-  )
-}
+  const getAllPatients = async () => {
+    const patients = await getPatients();
+  };
 
-export default PatientList
+  useEffect(() => {
+    getAllPatients();
+  }, []);
+  
+  return <div>PatientList</div>;
+};
+
+export default PatientList;
