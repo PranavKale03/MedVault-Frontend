@@ -6,9 +6,15 @@ const Profile = () => {
   console.log(user);
   return (
     <div className="mt-[100px] flex flex-col justify-center items-center">
-      <p>{user.fullName}</p>
-      <p>{user.role}</p>
-      <p>{user.type}</p>
+      {user ? (
+        <>
+          <p>{user.fullName}</p>
+          <p>{user.role}</p>
+          <p>{user.type}</p>
+        </>
+      ) : (
+        <>User not found.</>
+      )}
     </div>
   );
 };
