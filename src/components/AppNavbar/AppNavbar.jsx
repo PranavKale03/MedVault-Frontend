@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import "../../App.css";
 import Logo from "../../assets/react.svg";
@@ -7,31 +7,54 @@ import Profile from "../../assets/profile.svg";
 
 const AppNavbar = () => {
   const { user } = useContext(UserContext);
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
+  };
+
   return (
     <div>
       <nav className="bg-white fixed w-full z-20 top-0 start-0 border-b border-gray-200">
-        <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-          <a
-            href="/"
-            className="flex items-center space-x-3 rtl:space-x-reverse"
-          >
+        <div className="max-w-screen-xl flex items-center justify-between mx-auto p-4">
+          <a href="/" className="flex items-center space-x-3 rtl:space-x-reverse">
             <img src={Logo} className="h-8" alt="Logo" />
             <span className="self-center text-2xl font-semibold whitespace-nowrap">
               <span className="text-blue-700">Med</span>Vault
             </span>
           </a>
+          <div className="flex items-center justify-center flex-grow md:justify-center md:flex md:flex-grow-0 md:w-auto">
+            <ul className="flex justify-center space-x-8 md:justify-center">
+              <li>
+                <a href="/" className="text-gray-900 hover:text-blue-700">
+                  Home
+                </a>
+              </li>
+              <li>
+                <a href="/patient-list" className="text-gray-900 hover:text-blue-700">
+                  Patient List
+                </a>
+              </li>
+              <li>
+                <a href="/appointments" className="text-gray-900 hover:text-blue-700">
+                  Appointments
+                </a>
+              </li>
+              <li>
+                <a href="/contact" className="text-gray-900 hover:text-blue-700">
+                  Contact
+                </a>
+              </li>
+            </ul>
+          </div>
           {user ? (
-            <>
-              <div className="flex items-center justify-between mb-2 border rounded-full">
+            <div className="flex items-center">
+              <div className="ml-4">
                 <Link to={`/${user.id}`}>
-                  <img
-                    className="w-10 h-10 rounded-full p-1"
-                    src={Profile}
-                    alt="Profile"
-                  />
+                  <img className="w-10 h-10 rounded-full" src={Profile} alt="Profile" />
                 </Link>
               </div>
-            </>
+            </div>
           ) : (
             <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
               <button
@@ -41,11 +64,9 @@ const AppNavbar = () => {
                 <Link to="/login">Login</Link>
               </button>
               <button
-                data-collapse-toggle="navbar-sticky"
+                onClick={toggleMenu}
                 type="button"
                 className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
-                aria-controls="navbar-sticky"
-                aria-expanded="false"
               >
                 <span className="sr-only">Open main menu</span>
                 <svg
@@ -66,46 +87,6 @@ const AppNavbar = () => {
               </button>
             </div>
           )}
-          <div
-            className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1"
-            id="navbar-sticky"
-          >
-            <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white">
-              <li>
-                <a
-                  href="/"
-                  className="block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500"
-                  aria-current="page"
-                >
-                  Home
-                </a>
-              </li>
-              <li>
-                <a
-                  href="/patient-list"
-                  className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0"
-                >
-                  Patient List
-                </a>
-              </li>
-              <li>
-                <a
-                  href="/appointments"
-                  className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0"
-                >
-                  Appointments
-                </a>
-              </li>
-              <li>
-                <a
-                  href="/contact"
-                  className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0"
-                >
-                  Contact
-                </a>
-              </li>
-            </ul>
-          </div>
         </div>
       </nav>
     </div>

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { login } from "./context";
 import { setLocalStorageValueForKey } from "../../utils/localStorage";
+import {toast} from "react-hot-toast";
 
 const Login = () => {
   const navigate = useNavigate()
@@ -11,18 +12,37 @@ const Login = () => {
   });
   const [error, setError] = useState("");
   const [loginType, setLoginType] = useState("DOCTOR");
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.email || !formData.password) {
       setError("Please enter both email and password.");
     } else {
-      const doctorLogin = await login(formData);
-      const res = doctorLogin.user;
-      if (res) {
-        setLocalStorageValueForKey("userId", res._id);
-        navigate(`/${res._id}`)
+      setLoading(true); // Set loading state to true while waiting for response
+      try {
+        const doctorLogin = await login(formData);
+        const res = doctorLogin.user;
+        console.log(res);
+        if (res) {
+          setLocalStorageValueForKey("userId", res._id);
+          // Show loading toast
+          const loadingToastId = toast.loading("Logging in...");
+          // Hide loading toast after 1 second and navigate
+          setTimeout(() => {
+            toast.dismiss(loadingToastId);
+            navigate(`/${res._id}`);
+          }, 1000);
+
+          setTimeout(() => {
+            window.location.reload();
+          }, 1000);
+        }
+      } catch (error) {
+        setError("An error occurred. Please try again."); // Set error state
+        toast.error("Login failed. Please try again."); // Show error toast
       }
+      setLoading(false); // Set loading state to false after response received
     }
   };
 

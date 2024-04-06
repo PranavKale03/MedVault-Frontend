@@ -5,16 +5,26 @@ import EmailImage from "../../assets/Email.svg";
 import PhoneImage from "../../assets/Phone.svg";
 import { useNavigate } from "react-router-dom";
 import { clearAllLocalStorage } from "../../utils/localStorage";
+import { toast } from "react-hot-toast";
 
 const Profile = () => {
-  const { user } = useContext(UserContext);
+  const { user, loading, error } = useContext(UserContext);
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(true)
+
   const handleLogout = () => {
+    toast.success("Logout successfull");
     clearAllLocalStorage();
     navigate("/");
   };
-  console.log(user);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
+  // console.log(user);
 
   return (
     <div className="mt-[150px] w-full h-full flex justify-center items-center">
