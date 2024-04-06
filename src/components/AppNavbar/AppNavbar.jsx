@@ -1,23 +1,53 @@
 import React, { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../../App.css";
 import Logo from "../../assets/react.svg";
 import UserContext from "../../context/UserContext";
 import Profile from "../../assets/profile.svg";
+import { clearAllLocalStorage } from "../../utils/localStorage";
 
 const AppNavbar = () => {
   const { user } = useContext(UserContext);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [popoverOpen, setPopoverOpen] = useState(false);
+  const navigate = useNavigate();
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
+  };
+
+  const togglePopover = () => {
+    setPopoverOpen(!popoverOpen);
+  };
+
+  const Popover = () => {
+    return (
+      <div className="mt-[275px] ml-[675px] p-6 absolute bg-slate-200 rounded-xl gap-2">
+        <div className="flex flex-col justify-start items-start gap-2 p-2">
+          <div onClick={navigate(`/${user.id}`)}>Profile</div>
+          <div onClick={navigate("/")}>Dashboard</div>
+          <div>Availability</div>
+          <div
+            onClick={() => {
+              clearAllLocalStorage();
+              navigate("/");
+            }}
+          >
+            Logout
+          </div>
+        </div>
+      </div>
+    );
   };
 
   return (
     <div>
       <nav className="bg-white fixed w-full z-20 top-0 start-0 border-b border-gray-200">
         <div className="max-w-screen-xl flex items-center justify-between mx-auto p-4">
-          <a href="/" className="flex items-center space-x-3 rtl:space-x-reverse">
+          <a
+            href="/"
+            className="flex items-center space-x-3 rtl:space-x-reverse"
+          >
             <img src={Logo} className="h-8" alt="Logo" />
             <span className="self-center text-2xl font-semibold whitespace-nowrap">
               <span className="text-blue-700">Med</span>Vault
@@ -31,17 +61,26 @@ const AppNavbar = () => {
                 </a>
               </li>
               <li>
-                <a href="/patient-list" className="text-gray-900 hover:text-blue-700">
+                <a
+                  href="/patient-list"
+                  className="text-gray-900 hover:text-blue-700"
+                >
                   Patient List
                 </a>
               </li>
               <li>
-                <a href="/appointments" className="text-gray-900 hover:text-blue-700">
+                <a
+                  href="/appointments"
+                  className="text-gray-900 hover:text-blue-700"
+                >
                   Appointments
                 </a>
               </li>
               <li>
-                <a href="/contact" className="text-gray-900 hover:text-blue-700">
+                <a
+                  href="/contact"
+                  className="text-gray-900 hover:text-blue-700"
+                >
                   Contact
                 </a>
               </li>
@@ -51,7 +90,11 @@ const AppNavbar = () => {
             <div className="flex items-center">
               <div className="ml-4">
                 <Link to={`/${user.id}`}>
-                  <img className="w-10 h-10 rounded-full" src={Profile} alt="Profile" />
+                  <img
+                    className="w-10 h-10 rounded-full"
+                    src={Profile}
+                    alt="Profile"
+                  />
                 </Link>
               </div>
             </div>
