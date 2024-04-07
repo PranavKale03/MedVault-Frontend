@@ -62,6 +62,14 @@ const AppNavbar = () => {
               </li>
               <li>
                 <a
+                  href="/dashboard"
+                  className="text-gray-900 hover:text-blue-700"
+                >
+                  Dashboard
+                </a>
+              </li>
+              <li>
+                <a
                   href="/patient-list"
                   className="text-gray-900 hover:text-blue-700"
                 >
