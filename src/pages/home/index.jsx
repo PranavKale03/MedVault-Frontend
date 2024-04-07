@@ -7,6 +7,7 @@ import Illustration from "../../assets/illustration.svg";
 import AboutPage from "../../assets/About.png";
 import Services from "../../assets/Services.png"
 import Footer from "../../assets/Footer.png"
+import Gallery from "../../assets/Gallery.png"
 
 const Home = () => {
   const images = document.querySelectorAll(".absolute");
@@ -48,6 +49,9 @@ const Home = () => {
       </div>
       <div className="w-full">
         <img className="w-full" src={Services} alt="Services" />
+      </div>
+      <div>
+        <img src={Gallery} alt="Gallery" />
       </div>
       <div>
         <img className="w-full" src={Footer} alt="Footer" />
