@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getPatients } from "./context";
 import { shortenSentence } from "../../utils/utils";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { setLocalStorageValueForKey } from "../../utils/localStorage";
 const Dashboard = () => {
   const [patients, setPatients] = useState([]);
@@ -50,14 +50,17 @@ const Dashboard = () => {
                     type="button"
                     className="text-white bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-8 py-3 text-center"
                     onClick={() => {
-                      navigate(`/patient-details`);
+                      // navigate(`/patient-details`);
                       setLocalStorageValueForKey(
                         "patientId",
                         currentPatient._id
                       );
                     }}
                   >
+                  <Link to={'/patient-details'}>
+
                     View
+                  </Link>
                   </button>
                 </div>
               </>
