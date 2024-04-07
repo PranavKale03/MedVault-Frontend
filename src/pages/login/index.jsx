@@ -9,6 +9,7 @@ const Login = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
+    appointmentDate: new Date(),
   });
   const [error, setError] = useState("");
   const [loginType, setLoginType] = useState("DOCTOR");
