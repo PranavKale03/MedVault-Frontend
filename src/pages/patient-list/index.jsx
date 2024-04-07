@@ -7,15 +7,12 @@ const PatientList = () => {
 
   const getAllPatients = async () => {
     const patients = await getPatients();
-    console.log(patients);
     setPatients(patients);
   };
 
   useEffect(() => {
     getAllPatients();
   }, []);
-
-  console.log(patients);
 
   return (
     <div className="mt-[100px] w-full flex justify-center">

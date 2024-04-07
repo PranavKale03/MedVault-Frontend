@@ -2,17 +2,16 @@ import React, { useEffect, useState } from "react";
 import { getPatients } from "./context";
 import { shortenSentence } from "../../utils/utils";
 import { useNavigate } from "react-router-dom";
+import { setLocalStorageValueForKey } from "../../utils/localStorage";
 const Dashboard = () => {
   const [patients, setPatients] = useState([]);
   const [currentPatient, setCurrentPatient] = useState();
   const navigate = useNavigate();
-
+  
   const getAllPatients = async () => {
     const patients = await getPatients();
-    console.log(patients);
     setPatients(patients);
     setCurrentPatient(patients[0]);
-    console.log(currentPatient);
   };
 
   useEffect(() => {
@@ -20,11 +19,10 @@ const Dashboard = () => {
   }, []);
 
   const handleViewPatient = () => {
-    // Navigate to the patient details page when "View" button is clicked
     navigate(`/patient-details`);
+    setLocalStorageValueForKey("patientId");
   };
 
-  console.log(patients);
 
   return (
     <div className="mt-[100px] w-full flex justify-center">
@@ -48,12 +46,19 @@ const Dashboard = () => {
                 </div>
 
                 <div className="flex justify-center items-center mt-4">
-                <button
-                type="button"
-                className="text-white bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-8 py-3 text-center"
-              onClick={handleViewPatient}>
-                View
-              </button>
+                  <button
+                    type="button"
+                    className="text-white bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-8 py-3 text-center"
+                    onClick={() => {
+                      navigate(`/patient-details`);
+                      setLocalStorageValueForKey(
+                        "patientId",
+                        currentPatient._id
+                      );
+                    }}
+                  >
+                    View
+                  </button>
                 </div>
               </>
             ) : (

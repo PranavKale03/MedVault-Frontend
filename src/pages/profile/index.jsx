@@ -24,7 +24,6 @@ const Profile = () => {
   if (error) {
     return <div>Error: {error.message}</div>;
   }
-  // console.log(user);
 
   return (
     <div className="mt-[150px] w-full h-full flex justify-center items-center">

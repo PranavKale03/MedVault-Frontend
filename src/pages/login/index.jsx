@@ -24,7 +24,6 @@ const Login = () => {
       try {
         const doctorLogin = await login(formData);
         const res = doctorLogin.user;
-        console.log(res);
         if (res) {
           setLocalStorageValueForKey("userId", res._id);
           // Show loading toast

@@ -22,7 +22,6 @@ export const register = async (data) => {
           { headers }
         );
 
-        console.log(response.data);
         return response.data;
       } catch (error) {
         console.error(error.message);

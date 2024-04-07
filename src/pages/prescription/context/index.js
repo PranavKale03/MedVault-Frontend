@@ -1,16 +1,13 @@
 import axios from "axios";
 import APP_HOST from "../../../configs/envVariables";
 
-export const healthDetails = async (data) => {
+export const addPrescription = async (data) => {
   const body = {
-    BP: data.BP,
-    sugar: data.sugar,
-    symptoms: data.symptoms,
-    diagnosis: data.diagnosis,
-    notes: data.notes,
-    appointmentDate: data.appointmentDate,
-    docid: data.docid,
-    patientid: data.patientid,
+    medicine_names: data.medicine_names,
+    doses: data.doses,
+    doc_id: data.doc_id,
+    patient_id: data.patient_id,
+    duration: "10",
   };
   try {
     const headers = {
@@ -18,7 +15,7 @@ export const healthDetails = async (data) => {
     };
 
     const response = await axios.post(
-      `${APP_HOST}/api/v1/patient/healthDetails`,
+      `${APP_HOST}/api/v1/patient/submitPresciption`,
       JSON.stringify(body),
       { headers }
     );
@@ -30,32 +27,27 @@ export const healthDetails = async (data) => {
   }
 };
 
-export const patientDetails = async () => {
+export const getPatients = async () => {
   try {
     const response = await axios.get(`${APP_HOST}/api/v1/user/All`);
-    return response.data;
+    return response.data.users;
   } catch (error) {
     console.error(error.message);
     throw error;
   }
 };
 
-export const getPatientDetails = async (data) => {
-  const body = {
-    patientID: data.patientId,
-  };
+export const sendMail = async (id) => {
   try {
     const headers = {
       "Content-Type": "application/json",
     };
 
-    const response = await axios.post(
-      `${APP_HOST}/api/v1/patient/getPatient`,
-      JSON.stringify(body),
-      { headers }
-    );
+    const response = await axios.post(`${APP_HOST}/api/v1/send/email/${id}`, {
+      headers,
+    });
 
-    return response.data.patients[0];
+    return response.data;
   } catch (error) {
     console.error(error.message);
     throw error;

@@ -1,36 +1,83 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import ProfileImage from "../../assets/ProfileImage.svg";
 import PhoneImage from "../../assets/Phone.svg";
 import { Link } from "react-router-dom";
+import { addPrescription, getPatients, sendMail } from "./context";
+import UserContext from "../../context/UserContext";
+import { getLocalStorageValueForKey } from "../../utils/localStorage";
 
 const PrescriptionForm = () => {
+  const [prescriptions, setPrescriptions] = useState([]);
+  const { user } = useContext(UserContext);
+
   const handleAdd = () => {
-    const prescriptionSection = document.querySelector(".w-full.bg-slate-100");
-    const newPrescriptionSection = prescriptionSection.cloneNode(true);
-    prescriptionSection.parentNode.insertBefore(
-      newPrescriptionSection,
-      prescriptionSection.nextSibling
-    );
+    setPrescriptions([
+      ...prescriptions,
+      { tablet: "", timeDoses: [], mealDoses: [] },
+    ]);
+  };
+  const handleSend = async () => {
+    const patientId = getLocalStorageValueForKey("patientId");
+
+    // Assuming addPrescription is an async function
+    try {
+      for (const prescription of prescriptions) {
+        const doses = `${prescription.timeDoses.join(
+          ", "
+        )}, ${prescription.mealDoses.join(", ")}`;
+        const data = {
+          medicine_names: prescription.tablet,
+          doses: doses,
+          doc_id: user.id,
+          patient_id: patientId,
+          duration: "10",
+        };
+        await addPrescription(data);
+      }
+      const res = await sendMail(patientId);
+    } catch (error) {
+      console.error("Error adding prescription:", error);
+    }
   };
 
-  const handleSend = () => {
-    const tabletName = document.getElementById("tablet").value;
-    const morningChecked = document.getElementById("default-checkbox").checked;
-    const afternoonChecked =
-      document.getElementById("default-checkbox").checked;
-    const eveningChecked = document.getElementById("default-checkbox").checked;
-    const beforeMealChecked =
-      document.getElementById("default-checkbox").checked;
-    const afterMealChecked =
-      document.getElementById("default-checkbox").checked;
-
-    console.log("Tablet Name:", tabletName);
-    console.log("Morning Dose Checked:", morningChecked);
-    console.log("Afternoon Dose Checked:", afternoonChecked);
-    console.log("Evening Dose Checked:", eveningChecked);
-    console.log("Before Meal Checked:", beforeMealChecked);
-    console.log("After Meal Checked:", afterMealChecked);
+  const handleTabletChange = (index, value) => {
+    const updatedPrescriptions = [...prescriptions];
+    updatedPrescriptions[index].tablet = value;
+    setPrescriptions(updatedPrescriptions);
   };
+
+  const handleTimeDoseChange = (index, dose) => {
+    const updatedPrescriptions = [...prescriptions];
+    if (updatedPrescriptions[index].timeDoses.includes(dose)) {
+      updatedPrescriptions[index].timeDoses = updatedPrescriptions[
+        index
+      ].timeDoses.filter((item) => item !== dose);
+    } else {
+      updatedPrescriptions[index].timeDoses.push(dose);
+    }
+    setPrescriptions(updatedPrescriptions);
+  };
+
+  const handleMealDoseChange = (index, dose) => {
+    const updatedPrescriptions = [...prescriptions];
+    if (updatedPrescriptions[index].mealDoses.includes(dose)) {
+      updatedPrescriptions[index].mealDoses = updatedPrescriptions[
+        index
+      ].mealDoses.filter((item) => item !== dose);
+    } else {
+      updatedPrescriptions[index].mealDoses.push(dose);
+    }
+    setPrescriptions(updatedPrescriptions);
+  };
+
+  const handlePatientFetch = async () => {
+    const res = await getPatients();
+  };
+
+  useEffect(() => {
+    handlePatientFetch();
+  }, []);
+
   return (
     <div className="mt-[100px] h-full flex justify-center items-center gap-10">
       <div className="flex flex-col justify-center items-center border rounded-3xl p-10 gap-5">
@@ -96,105 +143,72 @@ const PrescriptionForm = () => {
       </div>
       <div className="w-[60%] h-[700px] p-5 flex flex-col justify-start items-center border rounded-3xl overflow-y-auto">
         <h1 className="font-bold text-[16px] mb-4">Prescription</h1>
-        <div className="w-full bg-slate-100 p-5 rounded-3xl mb-5">
-          <div className="mb-3">
-            <label
-              htmlFor="tablet"
-              className="block mb-2 text-md font-medium text-gray-900"
-            >
-              Tablet 1
-            </label>
-            <input
-              type="tablet"
-              name="tablet"
-              id="tablet"
-              value=""
-              onChange={() => {}}
-              placeholder="Enter tablet name"
-              className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-              required
-            />
-          </div>
-          <div className="flex justify-between items-start">
-            <p className="font-medium">Doses</p>
-            <div className="flex flex-col justify-start items-center">
-              <div className="flex justify-center items-center gap-10">
-                <div className="flex items-center mb-4">
-                  <input
-                    id="default-checkbox"
-                    type="checkbox"
-                    value=""
-                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
-                  />
-                  <label
-                    htmlFor="default-checkbox"
-                    className="ms-2 text-sm font-medium text-gray-900"
-                  >
-                    Morning
-                  </label>
-                </div>
-                <div className="flex items-center mb-4">
-                  <input
-                    id="default-checkbox"
-                    type="checkbox"
-                    value=""
-                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
-                  />
-                  <label
-                    htmlFor="default-checkbox"
-                    className="ms-2 text-sm font-medium text-gray-900"
-                  >
-                    Afternoon
-                  </label>
-                </div>
-                <div className="flex items-center mb-4">
-                  <input
-                    id="default-checkbox"
-                    type="checkbox"
-                    value=""
-                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
-                  />
-                  <label
-                    htmlFor="default-checkbox"
-                    className="ms-2 text-sm font-medium text-gray-900"
-                  >
-                    Evening
-                  </label>
-                </div>
+        {prescriptions.map((prescription, index) => (
+          <div key={index} className="w-full bg-slate-100 p-5 rounded-3xl mb-5">
+            <div className="mb-3">
+              <label
+                htmlFor={`tablet-${index}`}
+                className="block mb-2 text-md font-medium text-gray-900"
+              >
+                Tablet {index + 1}
+              </label>
+              <input
+                type="text"
+                name={`tablet-${index}`}
+                id={`tablet-${index}`}
+                value={prescription.tablet}
+                onChange={(e) => handleTabletChange(index, e.target.value)}
+                placeholder="Enter tablet name"
+                className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                required
+              />
+            </div>
+            <div className="flex justify-between items-start">
+              <p className="font-medium">Time Doses</p>
+              <div className="flex flex-col justify-start items-center">
+                {["Morning", "Afternoon", "Evening"].map((dose) => (
+                  <div key={dose} className="flex items-center mb-4">
+                    <input
+                      id={`time-dose-${index}-${dose}`}
+                      type="checkbox"
+                      checked={prescription.timeDoses.includes(dose)}
+                      onChange={() => handleTimeDoseChange(index, dose)}
+                      className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
+                    />
+                    <label
+                      htmlFor={`time-dose-${index}-${dose}`}
+                      className="ms-2 text-sm font-medium text-gray-900"
+                    >
+                      {dose}
+                    </label>
+                  </div>
+                ))}
               </div>
-              <div className="flex justify-start items-center gap-10">
-                <div className="flex items-center mb-4">
-                  <input
-                    id="default-checkbox"
-                    type="checkbox"
-                    value=""
-                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
-                  />
-                  <label
-                    htmlFor="default-checkbox"
-                    className="ms-2 text-sm font-medium text-gray-900"
-                  >
-                    Before meal
-                  </label>
-                </div>
-                <div className="flex items-center mb-4">
-                  <input
-                    id="default-checkbox"
-                    type="checkbox"
-                    value=""
-                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
-                  />
-                  <label
-                    htmlFor="default-checkbox"
-                    className="ms-2 text-sm font-medium text-gray-900"
-                  >
-                    After meal
-                  </label>
-                </div>
+            </div>
+            <div className="flex justify-between items-start">
+              <p className="font-medium">Meal Doses</p>
+              <div className="flex flex-col justify-start items-center">
+                {["Before meal", "After meal"].map((dose) => (
+                  <div key={dose} className="flex items-center mb-4">
+                    <input
+                      id={`meal-dose-${index}-${dose}`}
+                      type="checkbox"
+                      checked={prescription.mealDoses.includes(dose)}
+                      onChange={() => handleMealDoseChange(index, dose)}
+                      className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
+                    />
+                    <label
+                      htmlFor={`meal-dose-${index}-${dose}`}
+                      className="ms-2 text-sm font-medium text-gray-900"
+                    >
+                      {dose}
+                    </label>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
-        </div>
+        ))}
         <div className="flex justify-center items-center gap-6 mt-5">
           <button
             type="button"
