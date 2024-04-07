@@ -15,6 +15,10 @@ const Profile = () => {
     toast.success("Logout successfull");
     clearAllLocalStorage();
     navigate("/");
+
+    setTimeout(() => {
+      window.location.reload();
+    }, 100);
   };
 
   if (loading) {
