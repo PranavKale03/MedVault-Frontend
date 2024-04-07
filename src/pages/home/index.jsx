@@ -3,13 +3,31 @@ import image1 from "../../assets/1.png";
 import image2 from "../../assets/2.png";
 import image3 from "../../assets/3.png";
 import image4 from "../../assets/4.png";
-import "./a.module.css";
+import Illustration from "../../assets/illustration.svg"
 
 const Home = () => {
+  const images = document.querySelectorAll(".absolute");
+
+  let angle = 0;
+  const angleIncrement = 360 / images.length;
+
+  function rotateImages() {
+    images.forEach((img, index) => {
+      const x =
+        32 * Math.cos(((angle + angleIncrement * index) * Math.PI) / 180);
+      const y =
+        32 * Math.sin(((angle + angleIncrement * index) * Math.PI) / 180);
+      img.style.transform = `translate(${x}px, ${y}px) rotate(${angle}deg)`;
+    });
+    angle += 1; // Adjust rotation speed
+    requestAnimationFrame(rotateImages);
+  }
+
+  rotateImages();
   return (
-    <div className="mt-[100px] justify-center items-center">
-      <div className="flex justify-center items-center">
-        <div className="flex flex-col justify-start items-start">
+    <div className="mt-[100px] flex justify-center items-center">
+      <div className="w-full flex justify-around items-center gap-10">
+        <div className="w-[50%] flex flex-col justify-start items-start ml-5">
           <h1 className="font-bold text-[64px]">
             <span className="text-blue-600">Med</span>Vault
           </h1>
@@ -18,11 +36,40 @@ const Home = () => {
             Professionals
           </p>
         </div>
-        <div>
-          <img src={image1} alt="image1" className="" />
-          <img src={image2} alt="image2" className="" />
-          <img src={image3} alt="image3" className="" />
-          <img src={image4} alt="image4" className="" />
+        <div className="w-[50%]">
+        <img src={Illustration} alt="Illustration" />
+          {/* <div className="flex justify-center items-center h-screen">
+            <div className="relative w-64 h-64">
+              <div className="absolute rounded-full overflow-hidden transition-transform duration-500 transform rotate-0">
+                <img
+                  src={image1}
+                  alt="Image"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="absolute rounded-full overflow-hidden transition-transform duration-500 transform rotate-0">
+                <img
+                  src={image2}
+                  alt="Image"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="absolute rounded-full overflow-hidden transition-transform duration-500 transform rotate-0">
+                <img
+                  src={image3}
+                  alt="Image"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="absolute rounded-full overflow-hidden transition-transform duration-500 transform rotate-0">
+                <img
+                  src={image4}
+                  alt="Image"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </div>
+          </div> */}
         </div>
       </div>
     </div>

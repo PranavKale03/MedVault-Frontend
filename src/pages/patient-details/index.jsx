@@ -10,25 +10,34 @@ import { useContext } from "react";
 
 const PatientDetails = () => {
   const navigate = useNavigate();
-  const { user } = useContext(UserContext)
-
+  const { user } = useContext(UserContext);
+  console.log(user);
   const [formData, setFormData] = useState({
     BP: "",
     sugar: "",
     symptoms: "",
     diagnosis: "",
     notes: "",
-    docid:user.id,
-    patientid:"",
-
+    docid: "",
+    patientid: "",
     appointmentDate: new Date(),
   });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const data = {
+      BP: "",
+      sugar: "",
+      symptoms: "",
+      diagnosis: "",
+      notes: "",
+      docid: user.id,
+      patientid: "",
+      appointmentDate: new Date(),
+    };
     try {
       // Call the healthDetails function from your context file
-      await healthDetails(formData);
+      await healthDetails(data);
       // Assuming success, navigate to the desired route
       navigate("/prescription");
     } catch (error) {
@@ -40,12 +49,13 @@ const PatientDetails = () => {
   const patientResponse = async () => {
     const res = await patientDetails();
     console.log(res);
-  }
+  };
 
   useEffect(() => {
     patientResponse()
   }, [])
 
+  // patientResponse();
   return (
     <div className="mt-[100px] h-full flex justify-center items-center gap-10">
       <div className="flex flex-col justify-center items-center border rounded-3xl p-10 gap-5">
@@ -112,29 +122,28 @@ const PatientDetails = () => {
       <div className="w-[60%] h-[700px] p-5 flex flex-col justify-start items-center border rounded-3xl overflow-y-auto">
         <h1 className="font-bold text-[16px] mb-4">Patient Health Details</h1>
         <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
-            <div className="flex">
-          <div>
-            <label
-              htmlFor="BP"
-              className="block mb-2 text-sm font-medium text-gray-900"
-            >
-              BP
-            </label>
-            <input
-              type="text"
-              name="BP"
-              id="BP"
-              value={formData.BP}
-              onChange={(e) =>
-                setFormData({ ...formData, BP: e.target.value })
-              }
-              className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-              placeholder="Enter BP"
-              
-            />
-          </div>
+          <div className="flex">
+            <div>
+              <label
+                htmlFor="BP"
+                className="block mb-2 text-sm font-medium text-gray-900"
+              >
+                BP
+              </label>
+              <input
+                type="text"
+                name="BP"
+                id="BP"
+                value={formData.BP}
+                onChange={(e) =>
+                  setFormData({ ...formData, BP: e.target.value })
+                }
+                className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                placeholder="Enter BP"
+              />
+            </div>
 
-          <label
+            <label
               htmlFor="sugar"
               className="block mb-2 text-sm font-medium text-gray-900"
             >
@@ -150,13 +159,12 @@ const PatientDetails = () => {
               }
               className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
               placeholder="Enter sugar"
-              
             />
           </div>
-          
-                {/* Div for Symptoms */}
+
+          {/* Div for Symptoms */}
           <div>
-          <label
+            <label
               htmlFor="symptoms"
               className="block mb-2 text-sm font-medium text-gray-900"
             >
@@ -172,12 +180,11 @@ const PatientDetails = () => {
               }
               className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
               placeholder="Enter symptoms"
-              
             />
           </div>
-                {/* Div for Diagnosis */}
+          {/* Div for Diagnosis */}
           <div>
-          <label
+            <label
               htmlFor="diagnosis"
               className="block mb-2 text-sm font-medium text-gray-900"
             >
@@ -193,12 +200,11 @@ const PatientDetails = () => {
               }
               className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
               placeholder="Enter Diagnosis"
-              
             />
           </div>
 
           <div>
-          <label
+            <label
               htmlFor="notes"
               className="block mb-2 text-sm font-medium text-gray-900"
             >
@@ -214,29 +220,29 @@ const PatientDetails = () => {
               }
               className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
               placeholder="Enter Additional Notes"
-              
             />
           </div>
 
           <div>
-  <label
-    htmlFor="appointmentDate"
-    className="block mb-2 text-sm font-medium text-gray-900"
-  >
-    Appointment Date and Time
-  </label>
-  <DatePicker
-    selected={formData.appointmentDate}
-    onChange={(date) => setFormData({ ...formData, appointmentDate: date })}
-    showTimeSelect
-    timeFormat="HH:mm"
-    timeIntervals={15}
-    dateFormat="MMMM d, yyyy h:mm aa"
-    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-    placeholderText="Select appointment date and time"
-  />
-</div>
-
+            <label
+              htmlFor="appointmentDate"
+              className="block mb-2 text-sm font-medium text-gray-900"
+            >
+              Appointment Date and Time
+            </label>
+            <DatePicker
+              selected={formData.appointmentDate}
+              onChange={(date) =>
+                setFormData({ ...formData, appointmentDate: date })
+              }
+              showTimeSelect
+              timeFormat="HH:mm"
+              timeIntervals={15}
+              dateFormat="MMMM d, yyyy h:mm aa"
+              className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+              placeholderText="Select appointment date and time"
+            />
+          </div>
 
           <button
             type="submit"
@@ -244,7 +250,6 @@ const PatientDetails = () => {
           >
             Prescription
           </button>
-          
         </form>
       </div>
     </div>
