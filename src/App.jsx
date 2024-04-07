@@ -9,6 +9,8 @@ import PatientList from "./pages/patient-list";
 import Appointments from "./pages/appointments";
 import Contact from "./pages/contact";
 import Profile from "./pages/profile";
+import PrescriptionForm from "./pages/prescription";
+import Home from "./pages/home";
 
 function App() {
   return (
@@ -19,8 +21,10 @@ function App() {
           <Routes>
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />
+            <Route path="/" element={<Home />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/patient-list" element={<PatientList />} />
+            <Route path="/prescription" element={<PrescriptionForm />} />
             <Route path="/appointments" element={<Appointments />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/:id" element={<Profile />} />
