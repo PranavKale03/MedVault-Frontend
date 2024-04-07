@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { getPatients } from "./context";
 import { shortenSentence } from "../../utils/utils";
-
+import { useNavigate } from "react-router-dom";
 const Dashboard = () => {
   const [patients, setPatients] = useState([]);
   const [currentPatient, setCurrentPatient] = useState();
+  const navigate = useNavigate();
 
   const getAllPatients = async () => {
     const patients = await getPatients();
@@ -18,6 +19,11 @@ const Dashboard = () => {
     getAllPatients();
   }, []);
 
+  const handleViewPatient = () => {
+    // Navigate to the patient details page when "View" button is clicked
+    navigate(`/patient-details`);
+  };
+
   console.log(patients);
 
   return (
@@ -30,7 +36,7 @@ const Dashboard = () => {
                 <h1 className="font-bold text-[24px]">
                   {currentPatient.fullName}
                 </h1>
-                <div className="flex justify-center items-center gap-8">
+                <div className="flex justify-center items-center gap-10 mt-3">
                   <div className="w-[100px] flex flex-col justify-center items-center bg-blue-500 text-white p-1 rounded-xl">
                     <h1>Age</h1>
                     <p>{currentPatient.age}</p>
@@ -39,6 +45,15 @@ const Dashboard = () => {
                     <h1>Gender</h1>
                     <p>{currentPatient.gender}</p>
                   </div>
+                </div>
+
+                <div className="flex justify-center items-center mt-4">
+                <button
+                type="button"
+                className="text-white bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-8 py-3 text-center"
+              onClick={handleViewPatient}>
+                View
+              </button>
                 </div>
               </>
             ) : (

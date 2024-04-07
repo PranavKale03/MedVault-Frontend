@@ -9,6 +9,7 @@ import PatientList from "./pages/patient-list";
 import Appointments from "./pages/appointments";
 import Contact from "./pages/contact";
 import Profile from "./pages/profile";
+import patientDetails from "./pages/patient-details";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
             <Route path="/patient-list" element={<PatientList />} />
             <Route path="/appointments" element={<Appointments />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/patient-details" element={<patientDetails/>} />
             <Route path="/:id" element={<Profile />} />
           </Routes>
         </UserProvider>
