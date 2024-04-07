@@ -9,7 +9,7 @@ import PatientList from "./pages/patient-list";
 import Appointments from "./pages/appointments";
 import Contact from "./pages/contact";
 import Profile from "./pages/profile";
-import patientDetails from "./pages/patient-details";
+import PatientDetails from "./pages/patient-details";
 import PrescriptionForm from "./pages/prescription";
 import Home from "./pages/home";
 
@@ -28,7 +28,7 @@ function App() {
             <Route path="/prescription" element={<PrescriptionForm />} />
             <Route path="/appointments" element={<Appointments />} />
             <Route path="/contact" element={<Contact />} />
-            <Route path="/patient-details" element={<patientDetails/>} />
+            <Route path="/patient-details" element={<PatientDetails />} />
             <Route path="/:id" element={<Profile />} />
           </Routes>
         </UserProvider>
