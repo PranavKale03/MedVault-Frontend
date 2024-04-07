@@ -9,7 +9,12 @@ import PatientList from "./pages/patient-list";
 import Appointments from "./pages/appointments";
 import Contact from "./pages/contact";
 import Profile from "./pages/profile";
+<<<<<<< HEAD
 import patientDetails from "./pages/patient-details";
+=======
+import PrescriptionForm from "./pages/prescription";
+import Home from "./pages/home";
+>>>>>>> 25a5129e86140079200382eebd1b2ff0c72cdc41
 
 function App() {
   return (
@@ -20,8 +25,10 @@ function App() {
           <Routes>
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />
+            <Route path="/" element={<Home />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/patient-list" element={<PatientList />} />
+            <Route path="/prescription" element={<PrescriptionForm />} />
             <Route path="/appointments" element={<Appointments />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/patient-details" element={<patientDetails/>} />
