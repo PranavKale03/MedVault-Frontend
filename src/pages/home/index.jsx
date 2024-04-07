@@ -19,10 +19,10 @@ const Home = () => {
           </p>
         </div>
         <div>
-<img src={image1} alt="image1" className="" />
-<img src={image2} alt="image2" className="" />
-<img src={image3} alt="image3" className="" />
-<img src={image4} alt="image4" className="" />
+          <img src={image1} alt="image1" className="" />
+          <img src={image2} alt="image2" className="" />
+          <img src={image3} alt="image3" className="" />
+          <img src={image4} alt="image4" className="" />
         </div>
       </div>
     </div>

@@ -9,12 +9,9 @@ import PatientList from "./pages/patient-list";
 import Appointments from "./pages/appointments";
 import Contact from "./pages/contact";
 import Profile from "./pages/profile";
-<<<<<<< HEAD
 import patientDetails from "./pages/patient-details";
-=======
 import PrescriptionForm from "./pages/prescription";
 import Home from "./pages/home";
->>>>>>> 25a5129e86140079200382eebd1b2ff0c72cdc41
 
 function App() {
   return (
