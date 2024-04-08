@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import ProfileImage from "../../assets/ProfileImage.svg";
 import PhoneImage from "../../assets/Phone.svg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { addPrescription, getPatients, sendMail } from "./context";
 import UserContext from "../../context/UserContext";
 import { getLocalStorageValueForKey } from "../../utils/localStorage";
@@ -9,6 +9,7 @@ import { getLocalStorageValueForKey } from "../../utils/localStorage";
 const PrescriptionForm = () => {
   const [prescriptions, setPrescriptions] = useState([]);
   const { user } = useContext(UserContext);
+  const navigate = useNavigate()
 
   const handleAdd = () => {
     setPrescriptions([
@@ -35,6 +36,9 @@ const PrescriptionForm = () => {
         await addPrescription(data);
       }
       const res = await sendMail(patientId);
+      if(res){
+        navigate('/dashboard')
+      }
     } catch (error) {
       console.error("Error adding prescription:", error);
     }

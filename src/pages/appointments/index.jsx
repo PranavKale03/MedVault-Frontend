@@ -1,16 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { getPatientList } from "./context";
 import { toast } from "react-hot-toast";
+import UserContext from "../../context/UserContext";
 
 const Appointments = () => {
   const [patients, setPatients] = useState([]);
   const [loading, setLoading] = useState(false);
+  const { user } = useContext(UserContext);
 
   const getAllPatients = async () => {
     try {
       setLoading(true);
-      const patientsData = await getPatientList();
-      setPatients(patientsData);
+      if (user) {
+        const patientsData = await getPatientList(user.id);
+        setPatients(patientsData);
+      }
       toast.success("Patients loaded successfully");
     } catch (error) {
       console.error("Error fetching patient data:", error);
@@ -22,7 +26,8 @@ const Appointments = () => {
 
   useEffect(() => {
     getAllPatients();
-  }, []);
+    console.log(patients);
+  },[user]);
 
   return (
     <div className="mt-[8em] w-full flex flex-col justify-center items-center gap-5">
@@ -53,21 +58,31 @@ const Appointments = () => {
         <p className="text-sky-500">Appointment Date</p>
         <p className="text-sky-500">Mobile Number</p>
       </div>
-      
+
       {loading ? (
         <div className="w-full text-center text-gray-500">Loading...</div>
       ) : (
         <>
-          {patients.map((patient, idx) => (
-            <div
-              key={idx}
-              className="w-full flex justify-around items-center bg-blue-100 p-3 rounded-xl gap-4"
-            >
-              <p>{patient.fullName}</p>
-              <p>{formatAppointmentDate(patient.healthDetails[0].appointmentDate)}</p>
-              <p>{patient.phone}</p>
-            </div>
-          ))}
+          {patients.length > 0 ? (
+            <>
+              {patients.map((patient, idx) => (
+                <div
+                  key={idx}
+                  className="w-full flex justify-around items-center bg-blue-100 p-3 rounded-xl gap-4"
+                >
+                  <p>{patient.fullName}</p>
+                  <p>
+                    {formatAppointmentDate(
+                      patient.healthDetails[0].appointmentDate
+                    )}
+                  </p>
+                  <p>{patient.phone}</p>
+                </div>
+              ))}
+            </>
+          ) : (
+            <>No appointments.</>
+          )}
         </>
       )}
     </div>
@@ -77,7 +92,10 @@ const Appointments = () => {
 // Function to format the appointment date
 const formatAppointmentDate = (dateString) => {
   const date = new Date(dateString);
-  return `${date.toLocaleDateString()} ${date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
+  return `${date.toLocaleDateString()} ${date.toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit",
+  })}`;
 };
 
 export default Appointments;
