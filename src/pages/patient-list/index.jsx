@@ -1,9 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { getPatients } from "./context";
 import { shortenSentence } from "../../utils/utils";
+import UserContext from "../../context/UserContext";
+import { useNavigate } from "react-router-dom";
 
 const PatientList = () => {
+  const { user } = useContext(UserContext)
   const [patients, setPatients] = useState([]);
+  const navigate = useNavigate()
 
   const getAllPatients = async () => {
     const patients = await getPatients();

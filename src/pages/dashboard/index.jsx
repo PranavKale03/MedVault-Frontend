@@ -1,9 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { getPatients } from "./context";
 import { shortenSentence } from "../../utils/utils";
 import { Link, useNavigate } from "react-router-dom";
 import { setLocalStorageValueForKey } from "../../utils/localStorage";
+import UserContext from "../../context/UserContext";
+
 const Dashboard = () => {
+  const { user } = useContext(UserContext)
   const [patients, setPatients] = useState([]);
   const [currentPatient, setCurrentPatient] = useState();
   const navigate = useNavigate();
@@ -17,12 +20,6 @@ const Dashboard = () => {
   useEffect(() => {
     getAllPatients();
   }, []);
-
-  const handleViewPatient = () => {
-    navigate(`/patient-details`);
-    setLocalStorageValueForKey("patientId");
-  };
-
 
   return (
     <div className="mt-[100px] w-full flex justify-center">
