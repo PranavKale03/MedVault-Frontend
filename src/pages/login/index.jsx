@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { login } from "./context";
 import { setLocalStorageValueForKey } from "../../utils/localStorage";
-import {toast} from "react-hot-toast";
+import { toast } from "react-hot-toast";
 
 const Login = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -20,29 +20,24 @@ const Login = () => {
     if (!formData.email || !formData.password) {
       setError("Please enter both email and password.");
     } else {
-      setLoading(true); // Set loading state to true while waiting for response
+      setLoading(true);
       try {
         const doctorLogin = await login(formData);
         const res = doctorLogin.user;
         if (res) {
           setLocalStorageValueForKey("userId", res._id);
-          // Show loading toast
           const loadingToastId = toast.loading("Logging in...");
-          // Hide loading toast after 1 second and navigate
           setTimeout(() => {
             toast.dismiss(loadingToastId);
             navigate(`/${res._id}`);
-          }, 1000);
-
-          setTimeout(() => {
             window.location.reload();
           }, 1000);
         }
       } catch (error) {
-        setError("An error occurred. Please try again."); // Set error state
-        toast.error("Login failed. Please try again."); // Show error toast
+        setError("An error occurred. Please try again.");
+        toast.error("Login failed. Please try again.");
       }
-      setLoading(false); // Set loading state to false after response received
+      setLoading(false);
     }
   };
 
@@ -126,13 +121,12 @@ const Login = () => {
               </button>
               <p className="text-sm font-light text-gray-500">
                 Don't have an account?{" "}
-                {/* <a
-                  href="/signup"
+                <Link
+                  to="/signup"
                   className="font-medium text-primary-600 hover:underline"
                 >
                   Register
-                </a> */}
-                <Link to="/signup" className="font-medium text-primary-600 hover:underline">Register</Link>
+                </Link>
               </p>
             </form>
           </div>
